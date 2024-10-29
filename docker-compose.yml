@@ -1,6 +1,6 @@
 services:
   app:
-    image: dev_kotlin:1.0
+    image: dev_kotlin_springboot:1.0
     container_name: ${CONTAINER_NAME}
     build:
       context: .
@@ -9,9 +9,12 @@ services:
         JAVA_VERSION: 21.0.5-tem
         KOTLIN_VERSION: 1.8.0
         GRADLE_VERSION: 8.10.2
+        SPRING_VERSION: 3.3.5
         U_ID: ${UID}
         G_ID: ${GID}
     environment:
       TERM: xterm-256color
+    ports:
+      - "8080:${HOST_PORT}"
     volumes:
       - ./work:/home/developer/work
