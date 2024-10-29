@@ -1,0 +1,17 @@
+services:
+  app:
+    image: dev_kotlin:1.0
+    container_name: ${CONTAINER_NAME}
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        JAVA_VERSION: 21.0.5-tem
+        KOTLIN_VERSION: 1.8.0
+        GRADLE_VERSION: 8.10.2
+        U_ID: ${UID}
+        G_ID: ${GID}
+    environment:
+      TERM: xterm-256color
+    volumes:
+      - ./work:/home/developer/work
