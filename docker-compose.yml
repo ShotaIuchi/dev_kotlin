@@ -9,10 +9,13 @@ services:
         JAVA_VERSION: 21.0.5-tem
         KOTLIN_VERSION: 1.8.0
         GRADLE_VERSION: 8.10.2
+        SPRING_VERSION: 3.3.5
         U_ID: ${HOST_UID}
         G_ID: ${HOST_GID}
+    working_dir: /home/developer/work
     environment:
       TERM: xterm-256color
-    working_dir: /home/developer/work
+    ports:
+      - "${HOST_PORT}:8080"
     volumes:
       - ./work:/home/developer/work
