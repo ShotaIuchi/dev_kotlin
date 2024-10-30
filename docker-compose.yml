@@ -1,6 +1,6 @@
 services:
   app:
-    image: dev_kotlin:1.0
+    image: dev_kotlin:latest
     container_name: ${CONTAINER_NAME}
     build:
       context: .
@@ -13,5 +13,6 @@ services:
         G_ID: ${GID}
     environment:
       TERM: xterm-256color
+    working_dir: /home/developer/work
     volumes:
       - ./work:/home/developer/work
