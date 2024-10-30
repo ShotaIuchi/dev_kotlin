@@ -1,1 +1,1 @@
-docker rmi dev_kotlin
+docker rmi dev_kotlin_springboot

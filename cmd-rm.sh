@@ -1,2 +1,2 @@
-docker stop dev_kotlin
-docker rm dev_kotlin
+docker stop dev_kotlin_springboot
+docker rm dev_kotlin_springboot
