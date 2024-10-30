@@ -16,31 +16,31 @@ ARG G_NAME=developer
 # root user
 USER root
 
-# Update the package list
-RUN apt-get update && apt-get install -y curl unzip zip
+# Install the necessary packages
+RUN apt-get update
+RUN apt-get upgrade -y
+RUN apt-get install -y curl unzip zip git vim
 
 # Create a new group and user
-RUN groupadd -g $G_ID $G_NAME
-RUN useradd -m -u $U_ID -g $G_ID $U_NAME
+RUN groupadd -g ${G_ID} ${G_NAME}
+RUN useradd -m -u ${U_ID} -g ${G_ID} ${U_NAME}
 
 # Change the user
-USER $U_NAME
+USER ${U_NAME}
 
 # SDKMAN! installation
 RUN curl -s "https://get.sdkman.io" | bash
 
 # SDKMAN! initialization
-RUN /bin/bash -c "source ~/.sdkman/bin/sdkman-init.sh && \
-    sdk install java $JAVA_VERSION && \
-    sdk install kotlin $KOTLIN_VERSION && \
-    sdk install gradle $GRADLE_VERSION && \
+RUN /bin/bash -c "source ${HOME}/.sdkman/bin/sdkman-init.sh && \
+    sdk install java ${JAVA_VERSION}&& \
+    sdk install kotlin ${KOTLIN_VERSION}&& \
+    sdk install gradle ${GRADLE_VERSION}&& \
     sdk install springboot $SPRING_VERSION && \
     sdk list"
 
-# Set the working directory
-WORKDIR /work
 
 # ===== RUN TIME =====
 
 # eternally run the container
-CMD ["tail", "-f", "/dev/null"]
+CMD tail -f /dev/null

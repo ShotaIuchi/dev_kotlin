@@ -1,6 +1,6 @@
 services:
   app:
-    image: dev_kotlin_springboot:1.0
+    image: dev_kotlin_springboot:latest
     container_name: ${CONTAINER_NAME}
     build:
       context: .
@@ -16,5 +16,6 @@ services:
       TERM: xterm-256color
     ports:
       - "8080:${HOST_PORT}"
+    working_dir: /home/developer/work
     volumes:
       - ./work:/home/developer/work
