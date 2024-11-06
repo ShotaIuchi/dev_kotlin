@@ -1,16 +1,23 @@
 #!/bin/bash
 
-CONTAINER_BASE_NAME="dev_space"
+export CONTAINER_BASE_NAME="dev_space"
 
-HOST_UID=$(id -u)
-HOST_GID=$(id -g)
+export SPRINGBOOT_HOST_PORT=8080
+export DATABASE_HOST_PORT=3306
+
+export HOST_UID=$(id -u)
+export HOST_GID=$(id -g)
 
 echo "base name: $CONTAINER_BASE_NAME"
 echo "host uid: $HOST_UID"
 echo "host gid: $HOST_GID"
+echo "springboot port: $SPRINGBOOT_HOST_PORT"
+echo "database port  : $DATABASE_HOST_PORT"
 
-export CONTAINER_BASE_NAME
-export HOST_UID HOST_GID
+export MYSQL_ROOT_PASSWORD="root"
+export MYSQL_DATABASE="dev_space"
+export MYSQL_USER="dev"
+export MYSQL_PASSWORD="dev"
 
 mkdir -p work
 
