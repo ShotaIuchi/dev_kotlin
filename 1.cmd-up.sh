@@ -20,6 +20,8 @@ export MYSQL_USER="dev"
 export MYSQL_PASSWORD="dev"
 
 mkdir -p work
+mkdir -p database/data
+mkdir -p database/init
 
 docker compose build
 docker compose up -d
