@@ -13,6 +13,7 @@ services:
         MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     environment:
       TERM: xterm-256color
+    user: "${HOST_UID}:${HOST_GID}"
     ports:
       - "${DATABASE_HOST_PORT}:3306"
     volumes:
