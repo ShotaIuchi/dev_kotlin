@@ -1,9 +1,9 @@
 services:
-  database:
-    image: ${CONTAINER_BASE_NAME}_database:latest
-    container_name: ${CONTAINER_BASE_NAME}_database
+  mysql:
+    image: ${CONTAINER_BASE_NAME}_mysql:latest
+    container_name: ${CONTAINER_BASE_NAME}_mysql
     build:
-      context: ./database
+      context: ./mysql
       dockerfile: Dockerfile
       args:
         MYSQL_VERSION: latest
@@ -17,8 +17,8 @@ services:
     ports:
       - "${DATABASE_HOST_PORT}:3306"
     volumes:
-      - ./database/data:/var/lib/mysql
-      - ./database/init:/docker-entrypoint-initdb.d
+      - ./mysql/data:/var/lib/mysql
+      - ./mysql/init:/docker-entrypoint-initdb.d
 
   kotlin:
     image: ${CONTAINER_BASE_NAME}_kotlin:latest
