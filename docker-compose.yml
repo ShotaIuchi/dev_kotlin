@@ -6,7 +6,7 @@ services:
       context: ./database
       dockerfile: Dockerfile
       args:
-        MYSQL_VERSION: 8.0.28
+        MYSQL_VERSION: latest
         MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
         MYSQL_DATABASE: ${MYSQL_DATABASE}
         MYSQL_USER: ${MYSQL_USER}
@@ -20,11 +20,29 @@ services:
       - ./database/data:/var/lib/mysql
       - ./database/init:/docker-entrypoint-initdb.d
 
-  springboot:
-    image: ${CONTAINER_BASE_NAME}_springboot:latest
-    container_name: ${CONTAINER_BASE_NAME}_springboot
+  kotlin:
+    image: ${CONTAINER_BASE_NAME}_kotlin:latest
+    container_name: ${CONTAINER_BASE_NAME}_kotlin
     build:
-      context: ./springboot
+      context: ./kotlin
+      dockerfile: Dockerfile
+      args:
+        JAVA_VERSION: 21.0.5-tem
+        KOTLIN_VERSION: 1.8.0
+        GRADLE_VERSION: 8.10.2
+        U_ID: ${HOST_UID}
+        G_ID: ${HOST_GID}
+    working_dir: /home/developer/work
+    environment:
+      TERM: xterm-256color
+    volumes:
+      - ./kotlin/work:/home/developer/work
+
+  kotlin_springboot:
+    image: ${CONTAINER_BASE_NAME}_kotlin_springboot:latest
+    container_name: ${CONTAINER_BASE_NAME}_kotlin_springboot
+    build:
+      context: ./kotlin_springboot
       dockerfile: Dockerfile
       args:
         JAVA_VERSION: 21.0.5-tem
@@ -37,6 +55,6 @@ services:
     environment:
       TERM: xterm-256color
     ports:
-      - "${SPRINGBOOT_HOST_PORT}:8080"
+      - "${KOTLIN_SPRINGBOOT_HOST_PORT}:8080"
     volumes:
-      - ./work:/home/developer/work
+      - ./kotlin_springboot/work:/home/developer/work

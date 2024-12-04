@@ -1,6 +1,6 @@
 # ===== BUILD TIME =====
 
-FROM ubuntu:20.04
+FROM ubuntu:22.04
 
 ARG JAVA_VERSION=21.0.5-tem
 ARG KOTLIN_VERSION=1.8.0
@@ -16,17 +16,12 @@ ARG G_NAME=developer
 # root user
 USER root
 
-# Install the necessary packages
-RUN apt-get update
-RUN apt-get upgrade -y
-RUN apt-get install -y curl unzip zip git vim
-
 # Create a new group and user
-RUN groupadd -g ${G_ID} ${G_NAME}
-RUN useradd -m -u ${U_ID} -g ${G_ID} ${U_NAME}
+RUN if ! getent group ${G_ID}; then groupadd -g ${G_ID} ${G_NAME}; fi
+RUN if ! id -u ${U_NAME} >/dev/null 2>&1; then useradd -m -u ${U_ID} -g ${G_ID} ${U_NAME}; fi
 
-# Change the user
-USER ${U_NAME}
+# Install the necessary packages
+RUN apt-get update && apt-get install -y curl unzip zip git vim
 
 # SDKMAN! installation
 RUN curl -s "https://get.sdkman.io" | bash
@@ -39,6 +34,8 @@ RUN /bin/bash -c "source ${HOME}/.sdkman/bin/sdkman-init.sh && \
     sdk install springboot ${SPRING_VERSION}&& \
     sdk list"
 
+# Change the user
+USER ${U_NAME}
 
 # ===== RUN TIME =====
 
