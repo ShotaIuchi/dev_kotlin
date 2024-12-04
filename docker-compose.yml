@@ -58,3 +58,21 @@ services:
       - "${KOTLIN_SPRINGBOOT_HOST_PORT}:8080"
     volumes:
       - ./kotlin_springboot/work:/home/developer/work
+
+  go:
+    image: ${CONTAINER_BASE_NAME}_go:latest
+    container_name: ${CONTAINER_BASE_NAME}_go
+    build:
+      context: ./go
+      dockerfile: Dockerfile
+      args:
+        JAVA_VERSION: 21.0.5-tem
+        KOTLIN_VERSION: 1.8.0
+        GRADLE_VERSION: 8.10.2
+        U_ID: ${HOST_UID}
+        G_ID: ${HOST_GID}
+    working_dir: /home/developer/work
+    environment:
+      TERM: xterm-256color
+    volumes:
+      - ./go/work:/home/developer/work
